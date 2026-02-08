@@ -1,0 +1,24 @@
+@app.route("/admin/pending-withdraw")
+def pending_withdraw():
+    conn=db(); c=conn.cursor()
+    c.execute("""
+    SELECT w.id,u.name,w.amount,w.method,w.number
+    FROM withdraws w JOIN users u ON w.user_id=u.id
+    WHERE w.status='pending'
+    """)
+    data=c.fetchall()
+    conn.close()
+    return jsonify(data)
+
+@app.route("/admin/approve-withdraw/<int:id>")
+def approve_withdraw(id):
+    conn=db(); c=conn.cursor()
+    c.execute("SELECT user_id,amount FROM withdraws WHERE id=?", (id,))
+    r=c.fetchone()
+    if not r: return "not found"
+
+    user_id,amount=r
+    c.execute("UPDATE users SET balance=balance-? WHERE id=?", (amount,user_id))
+    c.execute("UPDATE withdraws SET status='paid' WHERE id=?", (id,))
+    conn.commit(); conn.close()
+    return jsonify({"status":"paid"})
