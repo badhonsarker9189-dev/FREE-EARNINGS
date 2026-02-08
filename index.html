@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>💎 Mini Earn App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>💎 Mini Earn App</h1>
+
+    <div class="card">
+      <p>Balance: <span id="balance">৳0.00</span></p>
+    </div>
+
+    <div class="card">
+      <h3>Tasks</h3>
+      <button onclick="completeTask()">Complete Task (+৳10)</button>
+    </div>
+
+    <div class="card">
+      <h3>Withdraw</h3>
+      <input type="text" id="amount" placeholder="Amount">
+      <input type="text" id="method" placeholder="bKash/Nagad/Rocket">
+      <input type="text" id="account" placeholder="Account Number">
+      <button onclick="withdraw()">Request Withdraw</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
